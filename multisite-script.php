@@ -1,8 +1,8 @@
 <?php
 /**
-* Plugin Name: Multisite Header / Footer Scripts
+* Plugin Name: Network Wide Custom Code
 * Plugin URI: https://www.brainstormforce.com/
-* Description: Allows you to insert code or text in the header or footer of your all Multisite WordPress blog
+* Description: This plugin is for WordPress Multisite setup. It allows to add custom CSS & JS code in the network admin which will be enqueued on all sites under the network. The custom code can be anything like Google analytics, Facebook Pixel or a simple CSS snippet.
 * Version: 1.0.0
 * Author: Brainstorm Force
 * Author URI: https://www.brainstormforce.com/
@@ -127,11 +127,13 @@ if(!class_exists('Multisite_Script_Class')){
 		public function add_plugin_page() {
 
 			add_menu_page (
-				__("Multisite Script","smile"),
-				__("Multisite Script","smile"),
+				__("Network Wide Custom Code","smile"),
+				__("Network Wide Custom Code","smile"),
 				"administrator",
 				'multisite-script',
-				array( $this, 'create_admin_page' )
+				array( $this, 'create_admin_page' ),
+				'dashicons-editor-code',
+				99
 			);
 	    }
 
@@ -144,8 +146,8 @@ if(!class_exists('Multisite_Script_Class')){
 	        ?>
 	        <div class="wrap about-wrap">
 	            <div class="heading-section">
-					<h1><?php echo __( 'Multisite Script', 'smile' ); ?></h1>
-					<div class="about-text about-text"><?php echo __( 'Lorem Ipsum', 'smile' ); ?></div>
+					<h1><?php echo __( 'Network Wide Custom Code', 'smile' ); ?></h1>
+					<div class="about-text about-text"><?php echo __( 'This plugin is for WordPress Multisite setup. It allows to add custom CSS & JS code in the network admin which will be enqueued on all sites under the network. The custom code can be anything like Google analytics, Facebook Pixel or a simple CSS snippet.', 'smile' ); ?></div>
 					<div class="badge"></div>
 					<div class="tabs">
 						<form method="post" action="" autocomplete="off" id="multisite_admin_setting_form">
