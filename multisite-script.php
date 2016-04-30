@@ -127,8 +127,8 @@ if(!class_exists('Multisite_Script_Class')){
 		public function add_plugin_page() {
 
 			add_menu_page (
-				__("Network Wide Custom Code","smile"),
-				__("Network Wide Custom Code","smile"),
+				__("Custom Code","smile"),
+				__("Custom Code","smile"),
 				"administrator",
 				'multisite-script',
 				array( $this, 'create_admin_page' ),
