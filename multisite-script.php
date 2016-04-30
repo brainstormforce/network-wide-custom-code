@@ -39,7 +39,7 @@ if(!class_exists('Multisite_Script_Class')){
 
 		public function admin_post_edit_options(){
 			if( $_GET['page'] == 'multisite-script' ) {
-				echo '<xmp>'; print_r($_POST['multisite_script_option']); echo '</xmp>'; //die;
+				//echo '<xmp>'; print_r($_POST['multisite_script_option']); echo '</xmp>'; //die;
 				if( isset( $_POST['multisite_script_option'] ) ) {
 					update_option( 'multisite_script_option', $_POST['multisite_script_option'] );
 					wp_redirect( admin_url( '/network/admin.php?page=multisite-script' ) );
