@@ -3,7 +3,7 @@
 * Plugin Name: Network Wide Custom Code
 * Plugin URI: https://www.brainstormforce.com/
 * Description: This plugin is for WordPress Multisite setup. It allows to add custom CSS & JS code in the network admin which will be enqueued on all sites under the network. The custom code can be anything like Google analytics, Facebook Pixel or a simple CSS snippet.
-* Version: 1.0.0
+* Version: 1.0.1
 * Author: Brainstorm Force
 * Author URI: https://www.brainstormforce.com/
 */
@@ -24,17 +24,31 @@ if(!class_exists('Multisite_Script_Class')){
 		 */
 		
 		function __construct() {
-			$this->current_blog = get_current_blog_id();
-			switch_to_blog( 1 );
-			$this->multisite_script_option = get_option( 'multisite_script_option' );
-			switch_to_blog( $this->current_blog );
+			if( function_exists( 'switch_to_blog' ) ) {
+				$this->current_blog = get_current_blog_id();
+				switch_to_blog( 1 );
+				$this->multisite_script_option = get_option( 'multisite_script_option' );
+				switch_to_blog( $this->current_blog );
 
-			add_action( 'network_admin_menu', array( $this, 'add_plugin_page' ), 9999 );
-			add_action( 'admin_init', array( $this, 'admin_init' ) );
-			add_action( 'wp_head', array( $this, 'wp_head' ) );
-			add_action( 'wp_footer', array( $this, 'wp_footer' ) );
-			add_action( 'init', array( $this, 'init' ) );
-			add_action( 'init', array( $this, 'admin_post_edit_options' ) );
+				add_action( 'network_admin_menu', array( $this, 'add_plugin_page' ), 9999 );
+				add_action( 'admin_init', array( $this, 'admin_init' ) );
+				add_action( 'wp_head', array( $this, 'wp_head' ) );
+				add_action( 'wp_footer', array( $this, 'wp_footer' ) );
+				add_action( 'init', array( $this, 'init' ) );
+				add_action( 'init', array( $this, 'admin_post_edit_options' ) );
+			} else {
+	    		add_action( 'admin_notices', array( $this, 'error_notice' ) );
+	    	}
+		}
+
+		/*
+		 * Function Name: error_notice
+		 * Function Description: Admin notice
+		 */
+
+		public function error_notice() {
+			$msg = '<strong>Network Wide Custom Code</strong> works for WordPress Multisite setup only.';
+			echo"<div class=\"error\"> <p>" . $msg . "</p></div>"; 
 		}
 
 		public function admin_post_edit_options(){
