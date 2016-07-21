@@ -197,7 +197,7 @@ if(!class_exists('Multisite_Script_Class')){
 	    public function header_script_callback() {
 	    	$script = ( isset( $this->multisite_script_option['header_script'] ) ) ? stripslashes($this->multisite_script_option['header_script']) : '';
 	        printf(
-	        	'<textarea id="header_script" name="multisite_script_option[header_script]" rows="4" cols="50" placeholder="Add your script here.">%s</textarea>', $script
+	        	'<textarea id="header_script" name="multisite_script_option[header_script]" rows="4" cols="50" placeholder="Add your script here.">%s</textarea>', stripslashes($script)
 	        );
 	    }
 
@@ -207,7 +207,7 @@ if(!class_exists('Multisite_Script_Class')){
 	    public function footer_script_callback() {
 	    	$script = ( isset( $this->multisite_script_option['footer_script'] ) ) ? stripslashes($this->multisite_script_option['footer_script']) : '';
 	        printf(
-				'<textarea id="footer_script" name="multisite_script_option[footer_script]" rows="4" cols="50" placeholder="Add your script here.">%s</textarea>', $script
+				'<textarea id="footer_script" name="multisite_script_option[footer_script]" rows="4" cols="50" placeholder="Add your script here.">%s</textarea>', stripslashes($script)
 	        );
 	    }
 	}
