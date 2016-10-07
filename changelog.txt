@@ -3,3 +3,6 @@ ver: 1.0.0
 
 ver: 1.0.1
 - Non Multisite check issue fixed.
+
+ver: 1.0.2
+- Content slashes escaping added.
