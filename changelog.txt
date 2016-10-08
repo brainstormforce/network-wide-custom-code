@@ -6,3 +6,4 @@ ver: 1.0.1
 
 ver: 1.0.2
 - Content slashes escaping added.
+- Removed deprecated functions.

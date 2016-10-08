@@ -52,18 +52,20 @@ if(!class_exists('Multisite_Script_Class')){
 		}
 
 		public function admin_post_edit_options(){
-			if( $_GET['page'] == 'multisite-script' ) {
-				//echo '<xmp>'; print_r($_POST['multisite_script_option']); echo '</xmp>'; //die;
-				if( isset( $_POST['multisite_script_option'] ) ) {
-					update_option( 'multisite_script_option', $_POST['multisite_script_option'] );
-					wp_redirect( admin_url( '/network/admin.php?page=multisite-script' ) );
-					exit;
+			if( isset( $_GET['page'] ) ) {
+				if( $_GET['page'] == 'multisite-script' ) {
+					//echo '<xmp>'; print_r($_POST['multisite_script_option']); echo '</xmp>'; //die;
+					if( isset( $_POST['multisite_script_option'] ) ) {
+						update_option( 'multisite_script_option', $_POST['multisite_script_option'] );
+						wp_redirect( admin_url( '/network/admin.php?page=multisite-script' ) );
+						exit;
+					}
 				}
 			}
 		}
 
 		public function init() {
-			$blogs = get_blog_list($start, $num, $deprecated);
+			$blogs = get_sites();
 			
 			if( count( $blogs ) > 0 ) {
 				foreach( $blogs as $b ) {
