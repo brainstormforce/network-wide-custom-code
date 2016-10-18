@@ -3,7 +3,7 @@
 * Plugin Name: Network Wide Custom Code
 * Plugin URI: https://www.brainstormforce.com/
 * Description: This plugin is for WordPress Multisite setup. It allows to add custom CSS & JS code in the network admin which will be enqueued on all sites under the network. The custom code can be anything like Google analytics, Facebook Pixel or a simple CSS snippet.
-* Version: 1.0.2
+* Version: 1.0.1
 * Author: Brainstorm Force
 * Author URI: https://www.brainstormforce.com/
 */
@@ -52,14 +52,12 @@ if(!class_exists('Multisite_Script_Class')){
 		}
 
 		public function admin_post_edit_options(){
-			if( isset( $_GET['page'] ) ) {
-				if( $_GET['page'] == 'multisite-script' ) {
-					//echo '<xmp>'; print_r($_POST['multisite_script_option']); echo '</xmp>'; //die;
-					if( isset( $_POST['multisite_script_option'] ) ) {
-						update_option( 'multisite_script_option', $_POST['multisite_script_option'] );
-						wp_redirect( admin_url( '/network/admin.php?page=multisite-script' ) );
-						exit;
-					}
+			if( isset( $_GET['page'] ) && $_GET['page'] == 'multisite-script' ) {
+				//echo '<xmp>'; print_r($_POST['multisite_script_option']); echo '</xmp>'; //die;
+				if( isset( $_POST['multisite_script_option'] ) ) {
+					update_option( 'multisite_script_option', $_POST['multisite_script_option'] );
+					wp_redirect( admin_url( '/network/admin.php?page=multisite-script' ) );
+					exit;
 				}
 			}
 		}
@@ -85,7 +83,7 @@ if(!class_exists('Multisite_Script_Class')){
 		 */
 
 		public function wp_head() {
-			echo stripslashes( $this->multisite_script_option['header_script'] );
+			echo $this->multisite_script_option['header_script'];
 		}
 
 		/*
@@ -94,7 +92,7 @@ if(!class_exists('Multisite_Script_Class')){
 		 */
 
 		public function wp_footer() {
-			echo stripslashes( $this->multisite_script_option['footer_script'] );
+			echo $this->multisite_script_option['footer_script'];
 		}
 
 		/*
@@ -189,10 +187,10 @@ if(!class_exists('Multisite_Script_Class')){
 
 	        $new_input = array();
 	        if( isset( $input['header_script'] ) )
-	            $new_input['header_script'] = stripslashes( $input['header_script'] );
+	            $new_input['header_script'] = $input['header_script'];
 
 			if( isset( $input['footer_script'] ) )
-	            $new_input['footer_script'] = stripslashes( $input['footer_script'] );
+	            $new_input['footer_script'] = $input['footer_script'];
 
 	        return $new_input;
 	    }
@@ -210,7 +208,7 @@ if(!class_exists('Multisite_Script_Class')){
 	     * Callback function for Header Script input
 	     */
 	    public function header_script_callback() {
-	    	$script = ( isset( $this->multisite_script_option['header_script'] ) ) ? stripslashes( $this->multisite_script_option['header_script'] ) : '';
+	    	$script = ( isset( $this->multisite_script_option['header_script'] ) ) ? $this->multisite_script_option['header_script'] : '';
 	        printf(
 	        	'<textarea id="header_script" name="multisite_script_option[header_script]" rows="4" cols="50" placeholder="Add your script here.">%s</textarea>', stripslashes($script)
 	        );
@@ -220,7 +218,7 @@ if(!class_exists('Multisite_Script_Class')){
 	     * Callback function for Footer Script input
 	     */
 	    public function footer_script_callback() {
-	    	$script = ( isset( $this->multisite_script_option['footer_script'] ) ) ? stripslashes( $this->multisite_script_option['footer_script'] ) : '';
+	    	$script = ( isset( $this->multisite_script_option['footer_script'] ) ) ? $this->multisite_script_option['footer_script'] : '';
 	        printf(
 				'<textarea id="footer_script" name="multisite_script_option[footer_script]" rows="4" cols="50" placeholder="Add your script here.">%s</textarea>', stripslashes($script)
 	        );
