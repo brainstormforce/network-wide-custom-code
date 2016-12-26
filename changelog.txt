@@ -7,3 +7,8 @@ ver: 1.0.1
 ver: 1.0.2
 - Content slashes escaping added.
 - Removed deprecated functions.
+
+ver: 1.0.3
+- Network URL change
+- Multilingual compatibility added
+- 
