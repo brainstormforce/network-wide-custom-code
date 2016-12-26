@@ -1,0 +1,63 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-26 12:14+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco - https://localise.biz/"
+
+#: multisite-script.php:51
+msgid ""
+"<strong>Network Wide Custom Code</strong> works for WordPress Multisite "
+"setup only."
+msgstr ""
+
+#. ID
+#: multisite-script.php:124
+msgid "These scripts will be printed to the <code>&lt;head&gt;</code> section."
+msgstr ""
+
+#. ID
+#: multisite-script.php:132
+msgid ""
+"These scripts will be printed to the <code>&lt;footer&gt;</code> section."
+msgstr ""
+
+#: multisite-script.php:147 multisite-script.php:148
+msgid "Custom Code"
+msgstr ""
+
+#. Name of the plugin
+#: multisite-script.php:166
+msgid "Network Wide Custom Code"
+msgstr ""
+
+#. Description of the plugin
+#: multisite-script.php:167
+msgid ""
+"This plugin is for WordPress Multisite setup. It allows to add custom CSS & "
+"JS code in the network admin which will be enqueued on all sites under the "
+"network. The custom code can be anything like Google analytics, Facebook "
+"Pixel or a simple CSS snippet."
+msgstr ""
+
+#: multisite-script.php:215 multisite-script.php:226
+msgid "Add your script here."
+msgstr ""
+
+#. URI of the plugin
+#. Author URI of the plugin
+msgid "https://www.brainstormforce.com/"
+msgstr ""
+
+#. Author of the plugin
+msgid "Brainstorm Force"
+msgstr ""
