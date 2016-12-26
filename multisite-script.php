@@ -3,7 +3,7 @@
 * Plugin Name: Network Wide Custom Code
 * Plugin URI: https://www.brainstormforce.com/
 * Description: This plugin is for WordPress Multisite setup. It allows to add custom CSS & JS code in the network admin which will be enqueued on all sites under the network. The custom code can be anything like Google analytics, Facebook Pixel or a simple CSS snippet.
-* Version: 1.0.2
+* Version: 1.0.3
 * Author: Brainstorm Force
 * Author URI: https://www.brainstormforce.com/
  * Text Domain: nwcc

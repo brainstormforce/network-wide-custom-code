@@ -11,4 +11,3 @@ ver: 1.0.2
 ver: 1.0.3
 - Network URL change
 - Multilingual compatibility added
-- 

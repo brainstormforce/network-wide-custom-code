@@ -2,11 +2,11 @@
 Contributors: brainstormforce, vrundak
 Donate link: https://www.brainstormforce.com/payment
 Tags: multisite, network, wpms, css, js, google analytics, tracking, custom code, 
-Requires at least: 4.0.
-Tested up to: 4.5.1
-Stable tag: 4.5.1
+Requires at least: 4.6
+Tested up to: 4.7
+Stable tag: 1.0.0
 License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 This plugin allows to add custom CSS & JS code in the WordPress Multisite network admin which will be enqueued on all sites under the network.
 
@@ -38,4 +38,24 @@ It has two simple options:
 
 == Screenshots ==
 
-1. Admin Page
+1. assets/screenshots/1.png
+
+== Changelog ==
+
+= 1.0 =
+* Initial release
+
+= 1.0.1 =
+- Non Multisite check issue fixed.
+
+= 1.0.2 =
+- Content slashes escaping added.
+- Removed deprecated functions.
+
+= 1.0.3 =
+- Network URL change
+- Multilingual compatibility added
+
+== Upgrade Notice ==
+
+= 1.0.3 =
