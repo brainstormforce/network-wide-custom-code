@@ -111,7 +111,7 @@ if(!class_exists('Multisite_Script_Class')){
 		 */
 
 		public function wp_head() {
-			echo $this->multisite_script_option['header_script'];
+			echo stripslashes( $this->multisite_script_option['header_script'] );
 		}
 
 		/*
@@ -120,7 +120,7 @@ if(!class_exists('Multisite_Script_Class')){
 		 */
 
 		public function wp_footer() {
-			echo $this->multisite_script_option['footer_script'];
+			echo stripslashes( $this->multisite_script_option['footer_script'] );
 		}
 
 		/*
@@ -215,7 +215,7 @@ if(!class_exists('Multisite_Script_Class')){
 
 	        $new_input = array();
 	        if( isset( $input['header_script'] ) )
-	            $new_input['header_script'] = $input['header_script'];
+	            $new_input['header_script'] = stripslashes( $input['header_script'] );
 
 
 			if( isset( $input['footer_script'] ) )
