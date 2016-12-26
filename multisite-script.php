@@ -215,7 +215,7 @@ if(!class_exists('Multisite_Script_Class')){
 	        if( isset( $input['header_script'] ) )
 	            $new_input['header_script'] = stripslashes( $input['header_script'] );
 
-			if( isset( $input['footer_script'] ) )
+	        if( isset( $input['footer_script'] ) )
 	            $new_input['footer_script'] = stripslashes( $input['footer_script'] );
 
 	        return $new_input;
@@ -255,5 +255,3 @@ if(!class_exists('Multisite_Script_Class')){
 
 	new Multisite_Script_Class;
 }
-
-?>
