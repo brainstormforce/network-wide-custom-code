@@ -29,6 +29,7 @@ if(!class_exists('Multisite_Script_Class')){
 				$this->current_blog = get_current_blog_id();
 				switch_to_blog( 1 );
 				$this->multisite_script_option = get_option( 'multisite_script_option' );
+				
 				switch_to_blog( $this->current_blog );
 
 				add_action( 'network_admin_menu', array( $this, 'add_plugin_page' ), 9999 );
@@ -80,8 +81,8 @@ if(!class_exists('Multisite_Script_Class')){
 			if( isset( $_GET['page'] ) ) {
 				if( sanitize_text_field( $_GET['page'] ) == 'multisite-script' ) {
 					if( isset( $_POST['multisite_script_option'] ) ) {
-						$options['multisite_script_option']['header_script'] = stripslashes( $_POST['multisite_script_option']['header_script'] );
-						$options['multisite_script_option']['footer_script'] = stripslashes( $_POST['multisite_script_option']['footer_script'] );
+						$options['header_script'] = stripslashes( $_POST['multisite_script_option']['header_script'] );
+						$options['footer_script'] = stripslashes( $_POST['multisite_script_option']['footer_script'] );
 						update_option( 'multisite_script_option', $options );
 						wp_redirect( network_admin_url( 'admin.php?page=multisite-script' ) );
 						exit;
