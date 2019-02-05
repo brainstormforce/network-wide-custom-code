@@ -1,9 +1,9 @@
 === Network Wide Custom Code ===
-Contributors: brainstormforce, vrundak
-Donate link: https://www.brainstormforce.com/payment
+Contributors: brainstormforce
+Donate link: https://www.paypal.me/BrainstormForce
 Tags: multisite, network, wpms, css, js, google analytics, tracking, custom code, 
 Requires at least: 4.6
-Tested up to: 4.7
+Tested up to: 5.0
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
