@@ -3,7 +3,7 @@ Contributors: brainstormforce, vrundak
 Donate link: https://www.brainstormforce.com/payment
 Tags: multisite, network, wpms, css, js, google analytics, tracking, custom code, 
 Requires at least: 4.6
-Tested up to: 4.7
+Tested up to: 5.2
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -19,22 +19,18 @@ It has two simple options:
 *   Add code in the header
 *   Add code in the footer
 
-
 == Installation ==
-
 
 1. Upload the plugin files to the `/wp-content/plugins/plugin-name` directory, or install the plugin through the WordPress plugins screen directly.
 2. Activate the plugin through the 'Plugins' screen in WordPress
 3. In the network admin, a new menu will be added - Network Wide Custom Code which will take you to plugin's page
 4. You can add your custom code there.
 
-
 == Frequently Asked Questions ==
 
 * The code can be added in the header as well as footer
 * It can be any kind of CSS or JavaScript code
 * At the moment, the plugin is made for WordPress Multisite only.
-
 
 == Screenshots ==
 
@@ -44,18 +40,3 @@ It has two simple options:
 
 = 1.0 =
 * Initial release
-
-= 1.0.1 =
-- Non Multisite check issue fixed.
-
-= 1.0.2 =
-- Content slashes escaping added.
-- Removed deprecated functions.
-
-= 1.0.3 =
-- Network URL change
-- Multilingual compatibility added
-
-== Upgrade Notice ==
-
-= 1.0.3 =

@@ -3,177 +3,271 @@
 * Plugin Name: Network Wide Custom Code
 * Plugin URI: https://www.brainstormforce.com/
 * Description: This plugin is for WordPress Multisite setup. It allows to add custom CSS & JS code in the network admin which will be enqueued on all sites under the network. The custom code can be anything like Google analytics, Facebook Pixel or a simple CSS snippet.
-* Version: 1.0.3
+* Version: 1.0.0
 * Author: Brainstorm Force
 * Author URI: https://www.brainstormforce.com/
  * Text Domain: nwcc
 */
 
-//Block direct access to plugin files
+//Block direct access to plugin files.
 defined( 'ABSPATH' ) or die();
 
-if(!class_exists('Multisite_Script_Class')){
+if ( ! defined( 'NWCC_DIR' ) ) {
+	define( 'NWCC_DIR', plugin_dir_path( __FILE__ ) );
+}
+
+/**
+ * Multisite_Script_Class initial setup
+ *
+ * @since 1.0.0
+ */
+if( ! class_exists( 'Multisite_Script_Class' ) ) {
+
+	/**
+	 * Multisite_Script_Class initial setup
+	 */
 	class Multisite_Script_Class{
 
-		//Class variables
+		/**
+		 * Member Variable for update sitewide option
+		 *
+		 * @var multisite_script_option
+		 */
 		private $multisite_script_option;
+
+		/**
+		 * Member Variable for getting current site ID
+		 *
+		 * @var current_blog
+		 */
 		private $current_blog;
 		
-		/*
-		 * Function Name: __construct
-		 * Function Description: Constructor
+		/**
+		 *  Constructor
 		 */
-		
-		function __construct() {
+		public function __construct() {
+
 			if( function_exists( 'switch_to_blog' ) ) {
+
 				$this->current_blog = get_current_blog_id();
 				switch_to_blog( 1 );
-				$this->multisite_script_option = get_option( 'multisite_script_option' );
-				//echo '<xmp>'; print_r($this->multisite_script_option); echo '</xmp>';
+				$this->multisite_script_option = get_site_option( 'multisite_script_option' );
 				switch_to_blog( $this->current_blog );
 
+				// Add required actions.
 				add_action( 'network_admin_menu', array( $this, 'add_plugin_page' ), 9999 );
 				add_action( 'admin_init', array( $this, 'admin_init' ) );
-				add_action( 'wp_head', array( $this, 'wp_head' ) );
-				add_action( 'wp_footer', array( $this, 'wp_footer' ) );
-				add_action( 'init', array( $this, 'init' ) );
 				add_action( 'init', array( $this, 'admin_post_edit_options' ) );
+				add_action( 'init', array( $this, 'init' ) );
+
+				// Load textdomain translations.
 				$this->load_plugin_textdomain();
 			} else {
 	    		add_action( 'admin_notices', array( $this, 'error_notice' ) );
 	    	}
 		}
 
-		/*
+		/**
 		 * Function Name: error_notice
 		 * Function Description: Admin notice
+		 *
+		 * @since  1.0.0
+		 * @return void
 		 */
-
 		public function error_notice() {
-			$msg = __( '<strong>Network Wide Custom Code</strong> works for WordPress Multisite setup only.', 'nwcc');
-			echo "<div class=\"error\"> <p>" . $msg . "</p></div>"; 
+			$msg = __( '<strong>Network Wide Custom Code</strong> works for WordPress Multisite setup only.', 'nwcc' );
+			echo "<div class=\"error\"> <p>" . $msg . "</p> </div>"; 
 		}
 
-
+		/**
+		 * Load nwcc Text Domain.
+		 * This will load the translation textdomain depending on the file priorities.
+		 *      1. Global Languages /wp-content/languages/network-wide-custom-code/ folder
+		 *      2. Local dorectory /wp-content/plugins/network-wide-custom-code/languages/ folder
+		 *
+		 * @since  1.0.0
+		 * @return void
+		 */
 		public function load_plugin_textdomain() {
-			//Traditional WordPress plugin locale filter
+
+			//Traditional WordPress plugin locale filter.
 			$locale = apply_filters( 'plugin_locale', get_locale(), 'nwcc' );
 
-			//Setup paths to current locale file
+			//Setup paths to current locale file.
 			$mofile_global = trailingslashit( WP_LANG_DIR ) . 'plugins/network-wide-custom-code/' . $locale . '.mo';
-			$mofile_local  = trailingslashit( BB_ULTIMATE_ADDON_DIR ) . 'languages/' . $locale . '.mo';
+			$mofile_local  = trailingslashit( NWCC_DIR ) . 'languages/' . $locale . '.mo';
 
 			if ( file_exists( $mofile_global ) ) {
-				//Look in global /wp-content/languages/plugins/network-wide-custom-code/ folder
+				//Look in global /wp-content/languages/plugins/network-wide-custom-code/ folder.
 				return load_textdomain( 'nwcc', $mofile_global );
 			}
 			else if ( file_exists( $mofile_local ) ) {
-				//Look in local /wp-content/plugins/network-wide-custom-code/languages/ folder
+				//Look in local /wp-content/plugins/network-wide-custom-code/languages/ folder.
 				return load_textdomain( 'nwcc', $mofile_local );
 			} 
 
-			//Nothing found
+			//Nothing found.
 			return false;
 		}
 
-		public function admin_post_edit_options(){
+		/**
+		 * Function Name: admin_post_edit_options
+		 * Function Description: Sanitize text fields and update site option
+		 *
+		 * @since  1.0.0
+		 * @return void
+		 */
+		public function admin_post_edit_options() {
 
 			if( isset( $_GET['page'] ) ) {
+
 				if( sanitize_text_field( $_GET['page'] ) == 'multisite-script' ) {
+
 					if( isset( $_POST['multisite_script_option'] ) ) {
+
+						$options['header_style'] = sanitize_text_field( $_POST['multisite_script_option']['header_style'] );
 						$options['header_script'] = sanitize_text_field( $_POST['multisite_script_option']['header_script'] );
+
+						$options['footer_style'] = sanitize_text_field( $_POST['multisite_script_option']['footer_style'] );
 						$options['footer_script'] = sanitize_text_field( $_POST['multisite_script_option']['footer_script'] );
-						update_option( 'multisite_script_option', $options );
+
+						update_site_option( 'multisite_script_option', $options );
 						wp_redirect( network_admin_url( 'admin.php?page=multisite-script' ) );
 						exit;
 					}
-
 				}
 			}
 		}
 
+		/**
+		 * Function Name: init
+		 * Function Description: Initiator and add required WP actions
+		 *
+		 * @since  1.0.0
+		 * @return void
+		 */
 		public function init() {
-			$wp_version = get_bloginfo('version');
+
+			$wp_version = get_bloginfo( 'version' );
 			$p = '#(\.0+)+($|-)#';
-			$ver1 = preg_replace($p, '', $wp_version);
-		    $ver2 = preg_replace($p, '', '4.6.0');
+			$ver1 = preg_replace( $p, '', $wp_version );
+		    $ver2 = preg_replace( $p, '', '4.6.0' );
 		    $blogs = ( version_compare( $ver1, $ver2 ) < 0 ) ? wp_get_sites() : get_sites();
 
 			if( count( $blogs ) > 0 ) {
 				foreach( $blogs as $b ) {
-					add_action( 'wp_head', array( $this, 'wp_head' ) );
-					add_action( 'wp_footer', array( $this, 'wp_footer' ) );
+					// Add required actions for wp_head script and style.
+					add_action( 'wp_head', array( $this, 'wp_head_style' ) );
+					add_action( 'wp_head', array( $this, 'wp_head_script' ) );
+
+					// Add required actions for wp_footer script and style.
+					add_action( 'wp_footer', array( $this, 'wp_footer_style' ) );
+					add_action( 'wp_footer', array( $this, 'wp_footer_script' ) );
 				}
 			}
 			switch_to_blog( $this->current_blog );
 		}
 
-		/*
-		 * Function Name: wp_head
-		 * Function Description: Add a script in header
+		/**
+		 * Function Name: wp_head_style
+		 * Function Description: Add a style CSS in header
+		 *
+		 * @since  1.0.0
+		 * @return void
 		 */
-
-		public function wp_head() {
-			echo '<style type="text/css">' . strip_tags( $this->multisite_script_option['header_script'] ) . '</style>';
+		public function wp_head_style() {
+			echo '<style type="text/css">' . strip_tags( $this->multisite_script_option['header_style'] ) . '</style>';
 		}
 
-		/*
-		 * Function Name: wp_footer
-		 * Function Description: Add a script in footer
+		/**
+		 * Function Name: wp_head_script
+		 * Function Description: Add a script JS in header
+		 *
+		 * @since  1.0.0
+		 * @return void
 		 */
+		public function wp_head_script() {
+			echo '<script type="text/javascript">' . strip_tags( $this->multisite_script_option['header_script'] ) . '</script>';
+		}
 
-		public function wp_footer() {
+		/**
+		 * Function Name: wp_footer_style
+		 * Function Description: Add a style CSS in footer
+		 *
+		 * @since  1.0.0
+		 * @return void
+		 */
+		public function wp_footer_style() {
+			echo '<style type="text/css">' . strip_tags( $this->multisite_script_option['footer_style'] ) . '</style>';
+		}
+
+		/**
+		 * Function Name: wp_footer_script
+		 * Function Description: Add a script in footer
+		 *
+		 * @since  1.0.0
+		 * @return void
+		 */
+		public function wp_footer_script() {
 			echo '<script type="text/javascript">' . strip_tags( $this->multisite_script_option['footer_script'] ) . '</script>';
 		}
 
-		/*
+		/**
 		 * Function Name: admin_init
 		 * Function Description: Admin initialization
+		 *
+		 * @since  1.0.0
+		 * @return void
 		 */
-
 		public function admin_init() {
 
-        	// Register the setting tab
+        	// Register the setting tab.
 			register_setting(
-	            'multisite_script_group', // Option group
-	            'multisite_script_option', // Option name
-	            array( $this, 'sanitize' ) // Sanitize
+	            'multisite_script_group', // Option group.
+	            'multisite_script_option', // Option name.
+	            array( $this, 'sanitize' ) // Sanitize.
 	        );
 
 	        add_settings_section(
-	            'multisite_script_setting', // ID
+	            'multisite_script_setting', // ID.
 	            '', // Title
-	            array( $this, 'print_section_info' ), // Callback
-	            'multisite-script-admin' // Page
+	            array( $this, 'print_section_info' ), // Callback.
+	            'multisite_script_admin' // Page.
 	        );
 
 	        add_settings_field(
-	            'header_script', // ID
-	            __('These scripts will be printed to the <code>&lt;head&gt;</code> section.','nwcc'), // Title
-	            array( $this, 'header_script_callback' ), // Callback
-	            'multisite-script-admin', // Page
-	            'multisite_script_setting' // Section
+	            'header_script', // ID.
+	            __( 'These scripts & styles will be printed to the <code>&lt;head&gt;</code> section.', 'nwcc' ), // Title.
+	            array( $this, 'header_script_callback' ), // Callback.
+	            'multisite_script_admin', // Page.
+	            'multisite_script_setting' // Section.
 	        );
 
 	        add_settings_field(
-	            'footer_script', // ID
-	            __( 'These scripts will be printed to the <code>&lt;footer&gt;</code> section.','nwcc'), // Title
-	            array( $this, 'footer_script_callback' ), // Callback
-	            'multisite-script-admin', // Page
-	            'multisite_script_setting' // Section
+	            'footer_script', // ID.
+	            __( 'These scripts & styles will be printed to the <code>&lt;footer&gt;</code> section.', 'nwcc' ), // Title.
+	            array( $this, 'footer_script_callback' ), // Callback.
+	            'multisite_script_admin', // Page.
+	            'multisite_script_setting' // Section.
 	        );
 		}
 
-
-		/*
+		/**
 		 * Function Name: add_plugin_page
 		 * Function Description: Add a setting page in WP Setting
+		 *
+		 * @since  1.0.0
+		 * @return void
 		 */
 		public function add_plugin_page() {
 
+			if ( ! is_super_admin() ) {
+				return;
+			}
+
 			add_menu_page (
-				__("Custom Code","nwcc"),
-				__("Custom Code","nwcc"),
+				__( 'Custom Code', 'nwcc' ),
+				__( 'Custom Code', 'nwcc' ),
 				"administrator",
 				'multisite-script',
 				array( $this, 'create_admin_page' ),
@@ -182,10 +276,12 @@ if(!class_exists('Multisite_Script_Class')){
 			);
 	    }
 
-
-	    /*
+	    /**
 		 * Function Name: create_admin_page
 		 * Function Description: callback function to callback admin setting page
+		 *
+		 * @since  1.0.0
+		 * @return void
 		 */
 	    public function create_admin_page() {
 	        ?>
@@ -197,8 +293,9 @@ if(!class_exists('Multisite_Script_Class')){
 					<div class="tabs">
 						<form method="post" action="" autocomplete="off" id="multisite_admin_setting_form">
 						<?php
-							settings_fields( 'multisite_script_group' ); 
-							do_settings_sections( 'multisite-script-admin' );
+							settings_fields( 'multisite_script_group' );
+							do_settings_sections( 'multisite_script_admin' );
+							echo __( '<b>Note-</b> No need to use <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> tag.', 'nwcc' );
 							submit_button();
 						?>
 						</form>
@@ -208,60 +305,99 @@ if(!class_exists('Multisite_Script_Class')){
 	        <?php
 	    }
 
-
-	    /*
+	    /**
      	 * Sanitize each setting field as needed
 	     *
+		 * @since  1.0.0
 	     * @param array $input Contains all settings fields as array keys
 	     */
 	    public function sanitize( $input ) {
 
-	        $new_input = array();
-	        if( isset( $input['header_script'] ) )
-	            $new_input['header_script'] = stripslashes( $input['header_script'] );
+			$new_input = array();
 
+			// Header script and style.
+			if( isset( $input['header_style'] ) ) {
+				$new_input['header_style'] = stripslashes( $input['header_style'] );
+			}
 
-			if( isset( $input['footer_script'] ) )
-	            $new_input['footer_script'] = stripslashes( $input['footer_script'] );
+			if( isset( $input['header_script'] ) ) {
+				$new_input['header_script'] = stripslashes( $input['header_script'] );
+			}
+
+			// Footer script and style.
+			if( isset( $input['footer_style'] ) ) {
+				$new_input['footer_style'] = stripslashes( $input['footer_style'] );
+			}
+
+			if( isset( $input['footer_script'] ) ) {
+				$new_input['footer_script'] = stripslashes( $input['footer_script'] );
+			}
 
 	        return $new_input;
 	    }
 
-
-	    /*
+	    /**
 		 * Function Name: print_section_info
 		 * Function Description: Prints information about the section
+		 *
+		 * @since  1.0.0
+		 * @return void
 		 */
 	    public function print_section_info() {
-	        //Nothing to do here
+	        //Nothing to do here.
 	    }
 
-	    /*
-	     * Callback function for Header Script input
+	    /**
+	     * Callback function for Header Style and Script inputs
+		 *
+		 * @since  1.0.0
+		 * @return void
 	     */
 	    public function header_script_callback() {
 
-	    	$script = ( isset( $this->multisite_script_option['header_script'] ) ) ? stripslashes( $this->multisite_script_option['header_script'] ) : '';
-	    	$placeholder = __('Add your script here.', 'nwcc');
+			$style = ( isset( $this->multisite_script_option['header_style'] ) ) ? stripslashes( $this->multisite_script_option['header_style'] ) : '';
+			$script = ( isset( $this->multisite_script_option['header_script'] ) ) ? stripslashes( $this->multisite_script_option['header_script'] ) : '';
 
-	        printf(
-	        	'<textarea id="header_script" name="multisite_script_option[header_script]" rows="4" cols="50" placeholder="%s">%s</textarea>', $placeholder, stripslashes($script)
+			$placeholder_style = __( 'Add your CSS style here.', 'nwcc' );
+			$placeholder_script = __( 'Add your JS script here.', 'nwcc' );
+
+			printf(
+	        	'<textarea id="header_style" style="margin-right: 20px;" name="multisite_script_option[header_style]" rows="5" cols="50" placeholder="%s">%s</textarea>', $placeholder_style, stripslashes($style)
+	        );
+
+			printf(
+	        	'<textarea id="header_script" name="multisite_script_option[header_script]" rows="5" cols="50" placeholder="%s">%s</textarea>', $placeholder_script, stripslashes($script)
 	        );
 	    }
 
-	    /*
-	     * Callback function for Footer Script input
+	    /**
+	     * Callback function for Footer Style and Script inputs
+		 *
+		 * @since  1.0.0
+		 * @return void
 	     */
 	    public function footer_script_callback() {
 
-	    	$script = ( isset( $this->multisite_script_option['footer_script'] ) ) ? stripslashes( $this->multisite_script_option['footer_script'] ) : '';
-	    	$placeholder = __('Add your script here.', 'nwcc');
+			$style = ( isset( $this->multisite_script_option['footer_style'] ) ) ? stripslashes( $this->multisite_script_option['footer_style'] ) : '';
+			$script = ( isset( $this->multisite_script_option['footer_script'] ) ) ? stripslashes( $this->multisite_script_option['footer_script'] ) : '';
 
-	        printf(
-				'<textarea id="footer_script" name="multisite_script_option[footer_script]" rows="4" cols="50" placeholder="%s">%s</textarea>', $placeholder, stripslashes($script)
+			$placeholder_style = __( 'Add your CSS style here.', 'nwcc' );
+	    	$placeholder_script = __( 'Add your JS script here.', 'nwcc' );
+
+			printf(
+				'<textarea id="footer_style" style="margin-right: 20px;" name="multisite_script_option[footer_style]" rows="5" cols="50" placeholder="%s">%s</textarea>', $placeholder_style, stripslashes($style)
+	        );
+			
+			printf(
+				'<textarea id="footer_script" name="multisite_script_option[footer_script]" rows="5" cols="50" placeholder="%s">%s</textarea>', $placeholder_script, stripslashes($script)
 	        );
 	    }
 	}
 
+	/**
+	 * Instance
+	 *
+	 * @since 1.0.0
+	 */
 	new Multisite_Script_Class;
 }
