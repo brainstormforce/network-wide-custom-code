@@ -123,15 +123,15 @@ if( ! class_exists( 'Multisite_Script_Class' ) ) {
 
 			if( isset( $_GET['page'] ) ) {
 
-				if( sanitize_text_field( $_GET['page'] ) == 'multisite-script' ) {
+				if( $_GET['page'] == 'multisite-script' ) {
 
 					if( isset( $_POST['multisite_script_option'] ) ) {
 
-						$options['header_style'] = sanitize_text_field( $_POST['multisite_script_option']['header_style'] );
-						$options['header_script'] = sanitize_text_field( $_POST['multisite_script_option']['header_script'] );
+						$options['header_style'] = $_POST['multisite_script_option']['header_style'];
+						$options['header_script'] = $_POST['multisite_script_option']['header_script'];
 
-						$options['footer_style'] = sanitize_text_field( $_POST['multisite_script_option']['footer_style'] );
-						$options['footer_script'] = sanitize_text_field( $_POST['multisite_script_option']['footer_script'] );
+						$options['footer_style'] = $_POST['multisite_script_option']['footer_style'];
+						$options['footer_script'] = $_POST['multisite_script_option']['footer_script'];
 
 						update_site_option( 'multisite_script_option', $options );
 						wp_redirect( network_admin_url( 'admin.php?page=multisite-script' ) );
@@ -178,7 +178,7 @@ if( ! class_exists( 'Multisite_Script_Class' ) ) {
 		 * @return void
 		 */
 		public function wp_head_style() {
-			echo '<style type="text/css">' . strip_tags( $this->multisite_script_option['header_style'] ) . '</style>';
+			echo '<style type="text/css">' . wp_unslash( $this->multisite_script_option['header_style'] ) . '</style>';
 		}
 
 		/**
@@ -189,7 +189,7 @@ if( ! class_exists( 'Multisite_Script_Class' ) ) {
 		 * @return void
 		 */
 		public function wp_head_script() {
-			echo '<script type="text/javascript">' . strip_tags( $this->multisite_script_option['header_script'] ) . '</script>';
+			echo '<script type="text/javascript">' . wp_unslash( $this->multisite_script_option['header_script'] ) . '</script>';
 		}
 
 		/**
@@ -200,7 +200,7 @@ if( ! class_exists( 'Multisite_Script_Class' ) ) {
 		 * @return void
 		 */
 		public function wp_footer_style() {
-			echo '<style type="text/css">' . strip_tags( $this->multisite_script_option['footer_style'] ) . '</style>';
+			echo '<style type="text/css">' . wp_unslash( $this->multisite_script_option['footer_style'] ) . '</style>';
 		}
 
 		/**
@@ -211,7 +211,7 @@ if( ! class_exists( 'Multisite_Script_Class' ) ) {
 		 * @return void
 		 */
 		public function wp_footer_script() {
-			echo '<script type="text/javascript">' . strip_tags( $this->multisite_script_option['footer_script'] ) . '</script>';
+			echo '<script type="text/javascript">' . wp_unslash( $this->multisite_script_option['footer_script'] ) . '</script>';
 		}
 
 		/**
@@ -319,20 +319,20 @@ if( ! class_exists( 'Multisite_Script_Class' ) ) {
 
 			// Header script and style.
 			if( isset( $input['header_style'] ) ) {
-				$new_input['header_style'] = stripslashes( $input['header_style'] );
+				$new_input['header_style'] = $input['header_style'];
 			}
 
 			if( isset( $input['header_script'] ) ) {
-				$new_input['header_script'] = stripslashes( $input['header_script'] );
+				$new_input['header_script'] = $input['header_script'];
 			}
 
 			// Footer script and style.
 			if( isset( $input['footer_style'] ) ) {
-				$new_input['footer_style'] = stripslashes( $input['footer_style'] );
+				$new_input['footer_style'] = $input['footer_style'];
 			}
 
 			if( isset( $input['footer_script'] ) ) {
-				$new_input['footer_script'] = stripslashes( $input['footer_script'] );
+				$new_input['footer_script'] = $input['footer_script'];
 			}
 
 	        return $new_input;
@@ -357,18 +357,18 @@ if( ! class_exists( 'Multisite_Script_Class' ) ) {
 	     */
 	    public function header_script_callback() {
 
-			$style = ( isset( $this->multisite_script_option['header_style'] ) ) ? stripslashes( $this->multisite_script_option['header_style'] ) : '';
-			$script = ( isset( $this->multisite_script_option['header_script'] ) ) ? stripslashes( $this->multisite_script_option['header_script'] ) : '';
+			$style = ( isset( $this->multisite_script_option['header_style'] ) ) ? wp_unslash( $this->multisite_script_option['header_style'] ) : '';
+			$script = ( isset( $this->multisite_script_option['header_script'] ) ) ? wp_unslash( $this->multisite_script_option['header_script'] ) : '';
 
 			$placeholder_style = __( 'Add your CSS style here.', 'nwcc' );
 			$placeholder_script = __( 'Add your JS script here.', 'nwcc' );
 
 			printf(
-	        	'<textarea id="header_style" style="margin-right: 20px;" name="multisite_script_option[header_style]" rows="5" cols="50" placeholder="%s">%s</textarea>', $placeholder_style, stripslashes($style)
+	        	'<textarea id="header_style" style="margin-right: 20px;" name="multisite_script_option[header_style]" rows="5" cols="50" placeholder="%s">%s</textarea>', $placeholder_style, wp_unslash($style)
 	        );
 
 			printf(
-	        	'<textarea id="header_script" name="multisite_script_option[header_script]" rows="5" cols="50" placeholder="%s">%s</textarea>', $placeholder_script, stripslashes($script)
+	        	'<textarea id="header_script" name="multisite_script_option[header_script]" rows="5" cols="50" placeholder="%s">%s</textarea>', $placeholder_script, wp_unslash($script)
 	        );
 	    }
 
@@ -380,18 +380,18 @@ if( ! class_exists( 'Multisite_Script_Class' ) ) {
 	     */
 	    public function footer_script_callback() {
 
-			$style = ( isset( $this->multisite_script_option['footer_style'] ) ) ? stripslashes( $this->multisite_script_option['footer_style'] ) : '';
-			$script = ( isset( $this->multisite_script_option['footer_script'] ) ) ? stripslashes( $this->multisite_script_option['footer_script'] ) : '';
+			$style = ( isset( $this->multisite_script_option['footer_style'] ) ) ? wp_unslash( $this->multisite_script_option['footer_style'] ) : '';
+			$script = ( isset( $this->multisite_script_option['footer_script'] ) ) ? wp_unslash( $this->multisite_script_option['footer_script'] ) : '';
 
 			$placeholder_style = __( 'Add your CSS style here.', 'nwcc' );
 	    	$placeholder_script = __( 'Add your JS script here.', 'nwcc' );
 
 			printf(
-				'<textarea id="footer_style" style="margin-right: 20px;" name="multisite_script_option[footer_style]" rows="5" cols="50" placeholder="%s">%s</textarea>', $placeholder_style, stripslashes($style)
+				'<textarea id="footer_style" style="margin-right: 20px;" name="multisite_script_option[footer_style]" rows="5" cols="50" placeholder="%s">%s</textarea>', $placeholder_style, wp_unslash($style)
 	        );
 			
 			printf(
-				'<textarea id="footer_script" name="multisite_script_option[footer_script]" rows="5" cols="50" placeholder="%s">%s</textarea>', $placeholder_script, stripslashes($script)
+				'<textarea id="footer_script" name="multisite_script_option[footer_script]" rows="5" cols="50" placeholder="%s">%s</textarea>', $placeholder_script, wp_unslash($script)
 	        );
 	    }
 	}
