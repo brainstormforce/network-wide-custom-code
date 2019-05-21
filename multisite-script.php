@@ -6,7 +6,9 @@
 * Version: 1.0.0
 * Author: Brainstorm Force
 * Author URI: https://www.brainstormforce.com/
- * Text Domain: nwcc
+* Text Domain: nwcc
+*
+* @package NWCC.
 */
 
 //Block direct access to plugin files.

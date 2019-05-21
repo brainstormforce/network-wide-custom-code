@@ -1,0 +1,27 @@
+{
+  "name": "NWCC",
+  "version": "1.0.0",
+  "description": "This plugin is for WordPress Multisite setup. It allows to add custom CSS & JS code in the network admin which will be enqueued on all sites under the network. The custom code can be anything like Google analytics, Facebook Pixel or a simple CSS snippet.",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "phpcs": "vendor/bin/phpcs"
+  },
+  "dependencies": {
+    "moment-timezone": "^0.5.14"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.4",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-compress": "^1.4.3",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-release": "^0.14.0",
+    "grunt-wp-i18n": "^1.0.2",
+    "shelljs": "~0.8.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brainstormforce/network-wide-custom-code.git"
+  },
+  "author": "Brainstorm Force",
+  "license": "ISC"
+}
