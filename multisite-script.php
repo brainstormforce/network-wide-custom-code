@@ -117,15 +117,15 @@ if( ! class_exists( 'Multisite_Script_Class' ) ) {
 
 			if( isset( $_GET['page'] ) ) {
 
-				if( $_GET['page'] == 'multisite-script' ) {
+				if( sanitize_text_field( $_GET['page'] ) == 'multisite-script' ) {
 
 					if( isset( $_POST['multisite_script_option'] ) ) {
 
-						$options['header_style'] = $_POST['multisite_script_option']['header_style'];
-						$options['header_script'] = $_POST['multisite_script_option']['header_script'];
+						$options['header_style'] = sanitize_text_field( $_POST['multisite_script_option']['header_style'] );
+						$options['header_script'] = sanitize_text_field( $_POST['multisite_script_option']['header_script'] );
 
-						$options['footer_style'] = $_POST['multisite_script_option']['footer_style'];
-						$options['footer_script'] = $_POST['multisite_script_option']['footer_script'];
+						$options['footer_style'] = sanitize_text_field( $_POST['multisite_script_option']['footer_style'] );
+						$options['footer_script'] = sanitize_text_field( $_POST['multisite_script_option']['footer_script'] );
 
 						update_site_option( 'multisite_script_option', $options );
 						wp_redirect( network_admin_url( 'admin.php?page=multisite-script' ) );
@@ -144,7 +144,7 @@ if( ! class_exists( 'Multisite_Script_Class' ) ) {
 		 */
 		public function init() {
 
-			$blogs = version_compare( get_bloginfo( 'version' ), '4.6.0', '>=' ) ? wp_get_sites() : get_sites();
+			$blogs = version_compare( get_bloginfo( 'version' ), '4.6.0', '>=' ) ? get_sites() : get_sites();
 
 			if( count( $blogs ) > 0 ) {
 				foreach( $blogs as $b ) {
