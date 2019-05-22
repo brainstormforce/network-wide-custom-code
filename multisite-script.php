@@ -14,6 +14,10 @@
 //Block direct access to plugin files.
 defined( 'ABSPATH' ) or die();
 
+if ( ! defined( 'NWCC_ROOT' ) ) {
+	define( 'NWCC_ROOT', dirname( plugin_basename( __FILE__ ) ) );
+}
+
 if ( ! defined( 'NWCC_DIR' ) ) {
 	define( 'NWCC_DIR', plugin_dir_path( __FILE__ ) );
 }
@@ -63,7 +67,7 @@ if( ! class_exists( 'Multisite_Script_Class' ) ) {
 				add_action( 'init', array( $this, 'init' ) );
 
 				// Load textdomain translations.
-				$this->load_plugin_textdomain();
+				$this->load_textdomain();
 			} else {
 	    		add_action( 'admin_notices', array( $this, 'error_notice' ) );
 	    	}
@@ -90,26 +94,16 @@ if( ! class_exists( 'Multisite_Script_Class' ) ) {
 		 * @since  1.0.0
 		 * @return void
 		 */
-		public function load_plugin_textdomain() {
+		public function load_textdomain() {
 
-			//Traditional WordPress plugin locale filter.
-			$locale = apply_filters( 'plugin_locale', get_locale(), 'nwcc' );
+			/**
+			 * Filters the languages directory path to use for AffiliateWP.
+			 *
+			 * @param string $lang_dir The languages directory path.
+			 */
+			$lang_dir = apply_filters( 'nwcc_languages_directory', NWCC_ROOT . '/languages/' );
 
-			//Setup paths to current locale file.
-			$mofile_global = trailingslashit( WP_LANG_DIR ) . 'plugins/network-wide-custom-code/' . $locale . '.mo';
-			$mofile_local  = trailingslashit( NWCC_DIR ) . 'languages/' . $locale . '.mo';
-
-			if ( file_exists( $mofile_global ) ) {
-				//Look in global /wp-content/languages/plugins/network-wide-custom-code/ folder.
-				return load_textdomain( 'nwcc', $mofile_global );
-			}
-			else if ( file_exists( $mofile_local ) ) {
-				//Look in local /wp-content/plugins/network-wide-custom-code/languages/ folder.
-				return load_textdomain( 'nwcc', $mofile_local );
-			} 
-
-			//Nothing found.
-			return false;
+			load_plugin_textdomain( 'nwcc', false, $lang_dir );
 		}
 
 		/**
