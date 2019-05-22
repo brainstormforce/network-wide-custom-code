@@ -144,11 +144,7 @@ if( ! class_exists( 'Multisite_Script_Class' ) ) {
 		 */
 		public function init() {
 
-			$wp_version = get_bloginfo( 'version' );
-			$p = '#(\.0+)+($|-)#';
-			$ver1 = preg_replace( $p, '', $wp_version );
-		    $ver2 = preg_replace( $p, '', '4.6.0' );
-		    $blogs = ( version_compare( $ver1, $ver2 ) < 0 ) ? wp_get_sites() : get_sites();
+			$blogs = version_compare( get_bloginfo( 'version' ), '4.6.0', '>=' ) ? wp_get_sites() : get_sites();
 
 			if( count( $blogs ) > 0 ) {
 				foreach( $blogs as $b ) {
