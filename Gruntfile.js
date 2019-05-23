@@ -1,5 +1,8 @@
 module.exports = function (grunt) {
     grunt.initConfig({
+
+        pkg: grunt.file.readJSON( "package.json" ),
+
         copy: {
             main: {
                 options: {
@@ -83,15 +86,30 @@ module.exports = function (grunt) {
                     src: ['*.php', '**/*.php', '!node_modules/**', '!php-tests/**', '!bin/**', '!asset/bsf-core/**']
                 }
             }
-        }
+        },
+
+        wp_readme_to_markdown: {
+			your_target: {
+				files: {
+					"README.md": "readme.txt"
+				}
+			},
+		},
     });
 
+    /* Load Tasks */
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-contrib-clean');
+
     grunt.loadNpmTasks('grunt-wp-i18n');
 
     grunt.registerTask('i18n', ['addtextdomain', 'makepot']);
     grunt.registerTask('release', ['clean:zip', 'copy', 'compress', 'clean:main']);
+
+    /* Read File Generation task */
+    grunt.loadNpmTasks("grunt-wp-readme-to-markdown")
     
+    // Generate Read me file
+	grunt.registerTask( "readme", ["wp_readme_to_markdown"] )
 };

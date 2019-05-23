@@ -16,6 +16,7 @@
     "grunt-contrib-copy": "^1.0.0",
     "grunt-release": "^0.14.0",
     "grunt-wp-i18n": "^1.0.2",
+    "grunt-wp-readme-to-markdown": "^2.0.1",
     "shelljs": "~0.8.1"
   },
   "repository": {
