@@ -67,7 +67,7 @@ function nwcc_fail_wp_version() {
 
 /**
  * Function Name: need_network_error_notice
- * Function Description: Admin notice
+ * Function Description: Network setup need to be there, admin notice
  *
  * @since  1.0.0
  * @return void

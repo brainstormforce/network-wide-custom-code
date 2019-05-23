@@ -169,7 +169,7 @@ if( ! class_exists( 'Multisite_Script_Class' ) ) {
 
 		/**
 		 * Function Name: register_settings
-		 * Function Description: Admin initialization
+		 * Function Description: Admin initialization with registering settings
 		 *
 		 * @since  1.0.0
 		 * @return void
