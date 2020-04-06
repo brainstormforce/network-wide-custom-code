@@ -1,47 +1,51 @@
-#, fuzzy
+# Copyright (C) 2019 Brainstorm Force
+# This file is distributed under the same license as the Network Wide Custom Code package.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-26 12:14+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION\n"
+"Project-Id-Version: Network Wide Custom Code 1.0.0\n"
+"Report-Msgid-Bugs-To: "
+"https://wordpress.org/support/plugin/network-wide-custom-code\n"
+"POT-Creation-Date: 2019-12-30 09:41:42+00:00\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Loco - https://localise.biz/"
+"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Country: United States\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: "
+"__;_e;_x:1,2c;_ex:1,2c;_n:1,2;_nx:1,2,4c;_n_noop:1,2;_nx_noop:1,2,3c;esc_"
+"attr__;esc_html__;esc_attr_e;esc_html_e;esc_attr_x:1,2c;esc_html_x:1,2c;\n"
+"X-Poedit-Basepath: ../\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-Bookmarks: \n"
+"X-Textdomain-Support: yes\n"
+"X-Generator: grunt-wp-i18n 1.0.3\n"
 
-#: multisite-script.php:51
+#: classes/class-nwcc-loader.php:194
 msgid ""
-"<strong>Network Wide Custom Code</strong> works for WordPress Multisite "
-"setup only."
+"These scripts & styles will be printed to the <code>&lt;head&gt;</code> "
+"section."
 msgstr ""
 
-#. ID
-#: multisite-script.php:124
-msgid "These scripts will be printed to the <code>&lt;head&gt;</code> section."
-msgstr ""
-
-#. ID
-#: multisite-script.php:132
+#: classes/class-nwcc-loader.php:202
 msgid ""
-"These scripts will be printed to the <code>&lt;footer&gt;</code> section."
+"These scripts & styles will be printed to the <code>&lt;footer&gt;</code> "
+"section."
 msgstr ""
 
-#: multisite-script.php:147 multisite-script.php:148
+#: classes/class-nwcc-loader.php:223 classes/class-nwcc-loader.php:224
 msgid "Custom Code"
 msgstr ""
 
-#. Name of the plugin
-#: multisite-script.php:166
+#. Plugin Name of the plugin/theme
 msgid "Network Wide Custom Code"
 msgstr ""
 
-#. Description of the plugin
-#: multisite-script.php:167
+#. Description of the plugin/theme
 msgid ""
 "This plugin is for WordPress Multisite setup. It allows to add custom CSS & "
 "JS code in the network admin which will be enqueued on all sites under the "
@@ -49,15 +53,44 @@ msgid ""
 "Pixel or a simple CSS snippet."
 msgstr ""
 
-#: multisite-script.php:215 multisite-script.php:226
-msgid "Add your script here."
+#: classes/class-nwcc-loader.php:252
+msgid ""
+"<b>Note-</b> No need to use <code>&lt;script&gt;</code> and "
+"<code>&lt;style&gt;</code> tag."
 msgstr ""
 
-#. URI of the plugin
-#. Author URI of the plugin
+#: classes/class-nwcc-loader.php:304 classes/class-nwcc-loader.php:327
+msgid "Add your CSS style here."
+msgstr ""
+
+#: classes/class-nwcc-loader.php:305 classes/class-nwcc-loader.php:328
+msgid "Add your JS script here."
+msgstr ""
+
+#: multisite-script.php:48
+#. translators: %s: PHP version
+msgid ""
+"Network Wide Custom Code requires PHP version %s+, plugin is currently NOT "
+"RUNNING."
+msgstr ""
+
+#: multisite-script.php:63
+#. translators: %s: WordPress version
+msgid ""
+"Network Wide Custom Code requires WordPress version %s+. Because you are "
+"using an earlier version, the plugin is currently NOT RUNNING."
+msgstr ""
+
+#: multisite-script.php:76
+msgid ""
+"<strong>Network Wide Custom Code</strong> works for WordPress Multisite "
+"setup only."
+msgstr ""
+
+#. Author URI of the plugin/theme
 msgid "https://www.brainstormforce.com/"
 msgstr ""
 
-#. Author of the plugin
+#. Author of the plugin/theme
 msgid "Brainstorm Force"
 msgstr ""
