@@ -4,7 +4,7 @@ Donate link: https://www.paypal.me/BrainstormForce
 Tags: multisite, network, wpms, css, js, google analytics, tracking, custom code, 
 Requires at least: 4.6
 Requires PHP: 5.6
-Tested up to: 5.3.2
+Tested up to: 5.4
 Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
